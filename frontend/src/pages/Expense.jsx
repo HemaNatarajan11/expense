@@ -21,9 +21,12 @@ const Expense = () => {
 
   const fetchExpenses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/expenses", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://expense-dnfg.onrender.com/api/expenses",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       const data = await res.json();
       setExpenses(data);
     } catch (err) {
@@ -40,19 +43,22 @@ const Expense = () => {
     }
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/expenses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://expense-dnfg.onrender.com/api/expenses",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            description,
+            amount: Number(amount),
+            type,
+            category,
+          }),
         },
-        body: JSON.stringify({
-          description,
-          amount: Number(amount),
-          type,
-          category,
-        }),
-      });
+      );
       if (res.ok) {
         setDescription("");
         setAmount("");
@@ -68,7 +74,7 @@ const Expense = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/expenses/${id}`, {
+      await fetch(`https://expense-dnfg.onrender.com/api/expenses/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
